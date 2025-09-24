@@ -29,7 +29,7 @@ const Navbar = () => {
                 alt="FUTUREINNVO Logo"
                 className="h-8 w-auto logo-hover"
               />
-              <span className="text-xl font-bold text-white">FUTUREINNVO</span>
+              <span className="text-xl font-bold text-white">The Future of Innovation</span>
             </Link>
           </div>
 

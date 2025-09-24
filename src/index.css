@@ -1,0 +1,109 @@
+/* postcss-enable */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.8s ease-out;
+}
+
+.glass-effect {
+  background: rgba(30, 58, 138, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.glass-effect-strong {
+  background: rgba(30, 58, 138, 0.2);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+body {
+  background: linear-gradient(135deg, #1e3a8a, #1e40af, #3730a3, #312e81);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  min-height: 100vh;
+}
+
+/* Video optimization */
+video {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Video positioning options - you can easily switch between these */
+.video-position-top {
+  object-position: center 20% !important;
+}
+
+.video-position-upper {
+  object-position: center 30% !important;
+}
+
+.video-position-center {
+  object-position: center 50% !important;
+}
+
+.video-position-lower {
+  object-position: center 70% !important;
+}
+
+.video-position-bottom {
+  object-position: center 80% !important;
+}
+
+/* Ensure video doesn't interfere with content */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Logo hover effect */
+.logo-hover {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.logo-hover:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3)) drop-shadow(0 0 12px rgba(59, 130, 246, 0.2));
+}

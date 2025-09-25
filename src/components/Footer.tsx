@@ -34,6 +34,7 @@ const Footer = () => {
               <li><a href="/projects" className="text-blue-200 hover:text-white transition-colors">Projects</a></li>
               <li><a href="/team" className="text-blue-200 hover:text-white transition-colors">Team</a></li>
               <li><a href="/activities" className="text-blue-200 hover:text-white transition-colors">Activities</a></li>
+              <li><a href="/blog" className="text-blue-200 hover:text-white transition-colors">Blog</a></li>
               <li><a href="/ceo-message" className="text-blue-200 hover:text-white transition-colors">CEO Message</a></li>
               <li><a href="/career" className="text-blue-200 hover:text-white transition-colors">Career</a></li>
               <li><a href="/contact" className="text-blue-200 hover:text-white transition-colors">Contact</a></li>
@@ -60,7 +61,13 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-blue-400/20 mt-8 pt-8 text-center">
-          <p className="text-blue-300">&copy; 2025 FUTUREINNVO. All rights reserved.</p>
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-blue-300">&copy; 2025 FUTUREINNVO. All rights reserved.</p>
+            <div className="flex space-x-4 mt-2 sm:mt-0">
+              <a href="/privacy" className="text-blue-200 hover:text-white transition-colors text-sm">Privacy Policy</a>
+              <a href="/privacy#terms-of-service" className="text-blue-200 hover:text-white transition-colors text-sm">Terms of Service</a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

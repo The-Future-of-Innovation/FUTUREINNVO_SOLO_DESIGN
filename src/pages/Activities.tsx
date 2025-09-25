@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, Users, Trophy, Heart, Lightbulb, Globe } from 'lucide-react';
 
 const Activities = () => {

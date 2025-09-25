@@ -76,25 +76,31 @@ const CEOMessage = () => {
               {/* CEO Image */}
               <div className="relative">
                 <img
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="Ahmed Al-Rashid, CEO"
+                  src="/ceo-photo.jpg"
+                  alt="CEO, FUTUREINNVO"
                   className="w-full h-96 lg:h-full object-cover"
+                  onError={(e) => {
+                    // Fallback to a professional placeholder if the image is not found
+                    e.currentTarget.src = "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800";
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 text-white">
-                  <h2 className="text-2xl font-bold mb-2">Ahmed Al-Rashid</h2>
-                  <p className="text-blue-200">Chief Executive Officer & Founder</p>
+                  <h2 className="text-2xl font-bold mb-2">CEO & Founder</h2>
+                  <p className="text-blue-200">FUTUREINNVO</p>
+                  <p className="text-blue-300 text-sm mt-1">Leading Innovation in Oman</p>
                 </div>
               </div>
               
               {/* CEO Info */}
               <div className="p-8 lg:p-12">
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-white mb-4">Leadership Excellence</h3>
+                  <h3 className="text-2xl font-bold text-white mb-4">Visionary Leadership</h3>
                   <p className="text-blue-200 leading-relaxed">
-                    With over 15 years of experience in technology leadership and digital transformation, 
-                    Ahmed has been instrumental in driving innovation across multiple industries. His vision 
-                    for the future of AI and business transformation continues to guide our company's mission.
+                    A distinguished leader in technology and innovation, our CEO brings extensive experience
+                    in digital transformation and business development. Her vision for the future of AI and
+                    technology solutions continues to drive FUTUREINNVO's mission to transform businesses
+                    across the Middle East and beyond.
                   </p>
                 </div>
                 
@@ -112,15 +118,15 @@ const CEOMessage = () => {
                 <div className="space-y-3">
                   <div className="flex items-center text-blue-200">
                     <Award className="h-5 w-5 text-purple-300 mr-3" />
-                    <span>TEDx Speaker on Future of Technology</span>
+                    <span>Innovation & Technology Leader</span>
                   </div>
                   <div className="flex items-center text-blue-200">
                     <Award className="h-5 w-5 text-purple-300 mr-3" />
-                    <span>Published AI Research Author</span>
+                    <span>Digital Transformation Strategist</span>
                   </div>
                   <div className="flex items-center text-blue-200">
                     <Award className="h-5 w-5 text-purple-300 mr-3" />
-                    <span>Digital Transformation Expert</span>
+                    <span>Business Development Expert</span>
                   </div>
                 </div>
               </div>
@@ -141,11 +147,11 @@ const CEOMessage = () => {
                 <p className="animate-slide-in">
                   <strong className="text-white">Dear Partners, Clients, and Team Members,</strong>
                 </p>
-                
+
                 <p className="animate-slide-in" style={{ animationDelay: '0.2s' }}>
-                  When we founded <span className="text-blue-300 font-semibold">Future Innovation</span>, we had a simple yet ambitious vision: 
-                  to bridge the gap between cutting-edge technology and real-world business challenges. Today, as I reflect on our journey, 
-                  I'm incredibly proud of how far we\'ve come and excited about the future we're building together.
+                  When we founded <span className="text-blue-300 font-semibold">FUTUREINNVO</span>, we had a simple yet ambitious vision:
+                  to bridge the gap between cutting-edge technology and real-world business challenges. Today, as I reflect on our journey,
+                  I'm incredibly proud of how far we've come and excited about the future we're building together.
                 </p>
                 
                 <p className="animate-slide-in" style={{ animationDelay: '0.4s' }}>
@@ -183,20 +189,20 @@ const CEOMessage = () => {
                 </p>
                 
                 <p className="animate-slide-in" style={{ animationDelay: '1.6s' }}>
-                  The future belongs to those who dare to innovate, who embrace change, and who never stop learning. 
-                  At Future Innovation, we're not just preparing for the future – <span className="text-blue-300 font-semibold">we're creating it</span>.
+                  The future belongs to those who dare to innovate, who embrace change, and who never stop learning.
+                  At FUTUREINNVO, we're not just preparing for the future – <span className="text-blue-300 font-semibold">we're creating it</span>.
                 </p>
-                
+
                 <p className="animate-slide-in" style={{ animationDelay: '1.8s' }}>
                   <strong className="text-white">
                     Thank you for being part of our journey. The best is yet to come.
                   </strong>
                 </p>
-                
+
                 <div className="mt-8 animate-slide-in" style={{ animationDelay: '2s' }}>
-                  <p className="text-white font-semibold">Ahmed Al-Rashid</p>
-                  <p className="text-blue-300">Chief Executive Officer & Founder</p>
-                  <p className="text-blue-200">Future Innovation</p>
+                  <p className="text-white font-semibold">CEO & Founder</p>
+                  <p className="text-blue-300">Chief Executive Officer</p>
+                  <p className="text-blue-200">FUTUREINNVO</p>
                 </div>
               </div>
             </div>

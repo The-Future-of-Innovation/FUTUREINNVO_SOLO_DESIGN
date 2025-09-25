@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,17 +11,82 @@ const Contact = () => {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    alert('Message sent successfully! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      subject: '',
-      message: '',
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
+
+  // Initialize EmailJS
+  const initEmailJS = () => {
+    emailjs.init({
+      publicKey: 'Ps_uvAe9-3H9_DGlx', // Your public key
     });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Initialize EmailJS
+      initEmailJS();
+
+      // Prepare template parameters matching EmailJS expected format
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company || 'Not specified',
+        title: formData.subject, // Changed from 'subject' to 'title' to match your example
+        message: formData.message,
+        time: new Date().toLocaleString(), // Add timestamp
+      };
+
+      // Send email using EmailJS with correct service and template IDs
+      const response = await emailjs.send(
+        'service_yg8a8oj', // Your service ID
+        'contact_form', // Template ID (changed to match your example)
+        templateParams
+      );
+
+      if (response.status === 200) {
+        setSubmitStatus('success');
+        setStatusMessage('Message sent successfully! We will get back to you soon.');
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          subject: '',
+          message: '',
+        });
+      }
+    } catch (error: any) {
+      console.error('EmailJS Error:', error);
+
+      // For now, show a helpful message with contact details
+      setSubmitStatus('error');
+      setStatusMessage(`EmailJS setup incomplete. Please email us directly at futureinnvoteam@gmail.com or call +968 7111 1040.
+
+Your message: "${formData.message.substring(0, 100)}${formData.message.length > 100 ? '...' : ''}"
+From: ${formData.name} (${formData.email})`);
+
+      // Also create a mailto link as fallback
+      const mailtoLink = `mailto:futureinnvoteam@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || 'Not specified'}\n\nMessage:\n${formData.message}`
+      )}`;
+
+      // Open email client after a short delay
+      setTimeout(() => {
+        window.open(mailtoLink, '_blank');
+      }, 2000);
+
+    } finally {
+      setIsSubmitting(false);
+      // Clear status message after 10 seconds for error messages
+      setTimeout(() => {
+        setSubmitStatus('idle');
+        setStatusMessage('');
+      }, 10000);
+    }
   };
 
   return (
@@ -61,8 +127,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-white">Email</h3>
-                    <p className="text-blue-100">futureinnvoeam@gmail.com</p>
-
+                    <p className="text-blue-100">futureinnvoteam@gmail.com</p>
                   </div>
                 </div>
 
@@ -117,7 +182,23 @@ const Contact = () => {
           <div className="lg:col-span-2">
             <div className="glass-effect-strong rounded-2xl p-8 animate-float" style={{ animationDelay: '1s' }}>
               <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
-              
+
+              {/* Status Message */}
+              {submitStatus !== 'idle' && (
+                <div className={`mb-6 p-4 rounded-lg flex items-center ${
+                  submitStatus === 'success'
+                    ? 'bg-green-500/20 border border-green-400/30 text-green-200'
+                    : 'bg-red-500/20 border border-red-400/30 text-red-200'
+                }`}>
+                  {submitStatus === 'success' ? (
+                    <CheckCircle className="h-5 w-5 mr-3" />
+                  ) : (
+                    <AlertCircle className="h-5 w-5 mr-3" />
+                  )}
+                  {statusMessage}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -150,61 +231,93 @@ const Contact = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="company" className="block text-sm font-medium text-white mb-2">
                       Company
                     </label>
                     <input
                       type="text"
                       id="company"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 bg-blue-500/20 border border-blue-400/30 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors text-white placeholder-blue-200"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="subject" className="block text-sm font-medium text-white mb-2">
                       Subject *
                     </label>
                     <select
                       id="subject"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 bg-blue-500/20 border border-blue-400/30 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors text-white"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     >
-                      <option value="">Select a subject</option>
-                      <option value="general">General Inquiry</option>
-                      <option value="project">Project Discussion</option>
-                      <option value="partnership">Partnership</option>
-                      <option value="support">Technical Support</option>
-                      <option value="career">Career Opportunity</option>
+                      <option value="" className="bg-blue-900 text-blue-200">Select a subject</option>
+                      <option value="general" className="bg-blue-900 text-white">General Inquiry</option>
+                      <option value="project" className="bg-blue-900 text-white">Project Discussion</option>
+                      <option value="partnership" className="bg-blue-900 text-white">Partnership</option>
+                      <option value="support" className="bg-blue-900 text-white">Technical Support</option>
+                      <option value="career" className="bg-blue-900 text-white">Career Opportunity</option>
                     </select>
                   </div>
                 </div>
                 
                 <div className="mt-6">
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-white mb-2">
                     Message *
                   </label>
                   <textarea
                     id="message"
                     rows={6}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 bg-blue-500/20 border border-blue-400/30 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors text-white placeholder-blue-200"
                     placeholder="Tell us about your project or inquiry..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   ></textarea>
                 </div>
                 
-                <div className="mt-8">
+                <div className="mt-8 space-y-4">
                   <button
                     type="submit"
-                    className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center"
+                    disabled={isSubmitting}
+                    className={`w-full md:w-auto px-8 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center ${
+                      isSubmitting
+                        ? 'bg-blue-500/50 cursor-not-allowed text-blue-200'
+                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                    }`}
                   >
-                    Send Message
-                    <Send className="ml-2 h-5 w-5" />
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <Send className="ml-2 h-5 w-5" />
+                      </>
+                    )}
                   </button>
+
+                  {/* Backup Email Button */}
+                  <div className="text-center">
+                    <p className="text-blue-200 text-sm mb-2">Or send directly via email:</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const mailtoLink = `mailto:futureinnvoteam@gmail.com?subject=${encodeURIComponent(formData.subject || 'Contact Form Inquiry')}&body=${encodeURIComponent(
+                          `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || 'Not specified'}\n\nMessage:\n${formData.message}`
+                        )}`;
+                        window.open(mailtoLink, '_blank');
+                      }}
+                      className="inline-flex items-center px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors duration-200"
+                    >
+                      <Mail className="mr-2 h-4 w-4" />
+                      Open Email Client
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

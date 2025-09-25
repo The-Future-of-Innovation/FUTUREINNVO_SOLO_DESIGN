@@ -9,6 +9,8 @@ import Projects from './pages/Projects';
 import ProjectDetails from './pages/ProjectDetails';
 import Team from './pages/Team';
 import CEOMessage from './pages/CEOMessage';
+import Blog from './pages/Blog';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/projects/:id" element={<ProjectDetails />} />
             <Route path="/team" element={<Team />} />
             <Route path="/ceo-message" element={<CEOMessage />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/privacy" element={<Privacy />} />
           </Routes>
         </main>
         <Footer />
